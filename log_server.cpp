@@ -4,6 +4,7 @@
 #include <cstring>
 #include <ctime>
 #include <cstdlib>
+#include <iterator>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <string>
@@ -74,7 +75,9 @@ int main(int argc, char* argv[])
 	myaddr.sin_port = htons(PORT);
 
 	if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-		perror("cannot create socket");
+		std::time_t result = std::time(nullptr);
+		log << "Error: cannot create socket! " << "TIMESTAMP: " << std::asctime(std::localtime(&result)) << endl;
+		log.close();
 		return 0;
 	}
 
@@ -88,7 +91,7 @@ int main(int argc, char* argv[])
 	while (FOREVER) {
 		recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
 		if (recvlen > 0) {
-			string data(buf.begin(), buf.end());
+			string data(std::begin(buf), std::end(buf));
 			log << inet_ntoa(remaddr.sin_addr) << " : " << data << '\n';
 
 			if (data.compare("STOP") == 0)
