@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstring>
 #include <ctime>
+#include <cstdlib>
 #include <unistd.h>
 #include <string>
 #include <sys/socket.h>
@@ -11,7 +12,7 @@
 using namespace std;
 
 #define PORT 8767
-#define BUFSIZE 512;
+#define BUFSIZE 512
 #define FOREVER 1
 int main(int argc, char* argv[])
 {
