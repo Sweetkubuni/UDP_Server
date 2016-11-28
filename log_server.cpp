@@ -1,10 +1,8 @@
-#include <array>
 #include <iostream>
 #include <fstream>
 #include <cstring>
 #include <ctime>
 #include <cstdlib>
-#include <iterator>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
@@ -67,7 +65,7 @@ int main(int argc, char* argv[])
 	socklen_t addrlen = sizeof(remaddr);
 	int recvlen;
 	int fd;                         // server socket
-	array<char, BUFSIZE> buf;     // receive buffer
+	char buf[BUFSIZE];     // receive buffer
 	
 
 	memset((char *)&myaddr, 0, sizeof(myaddr));
@@ -90,9 +88,9 @@ int main(int argc, char* argv[])
 	}
 
 	while (FOREVER) {
-		recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
+		recvlen = recvfrom(fd, (void *)&buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
 		if (recvlen > 0) {
-			string data(std::begin(buf), std::end(buf));
+			string data(buf, recvlen);
 			log << inet_ntoa(remaddr.sin_addr) << " : " << data << '\n';
 
 			if (data.compare("STOP") == 0)
