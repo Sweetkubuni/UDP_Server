@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstring>
 #include <ctime>
+#include <cstdlib>
 #include <unistd.h>
 #include <string>
 #include <sys/socket.h>
