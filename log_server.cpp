@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 	socklen_t addrlen = sizeof(remaddr);
 	int recvlen;
 	int fd;                         // server socket
-	array<char> buf[BUFSIZE];     // receive buffer
+	array<char, BUFSIZE> buf;     // receive buffer
 	
 
 	memset((char *)&myaddr, 0, sizeof(myaddr));
